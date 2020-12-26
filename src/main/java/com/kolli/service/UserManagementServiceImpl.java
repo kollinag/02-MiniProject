@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.kolli.entity.City;
 import com.kolli.entity.Country;
@@ -16,6 +17,8 @@ import com.kolli.repository.CountryRepo;
 import com.kolli.repository.StateRepo;
 import com.kolli.repository.UserManagementRepo;
 
+
+@Service
 public class UserManagementServiceImpl implements IUserManagementService {
 	
 	@Autowired

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -51,29 +52,38 @@ public class UserManagement {
 	  //TODO
 	 boolean saveUserDetails = iUserManagementService.saveUserDetails(user);
 	
-	 return new ResponseEntity<String>("Please check your email to unlock account",HttpStatus.OK);
+	 return new ResponseEntity<String>("Please check your email to unlock account",HttpStatus.CREATED);
 	 
 	 
   }
+ 
+ @PutMapping(value="/forgetPassword/{emailId}",
+		       produces={"application/json"})
+ public ResponseEntity<String> forgetPassword(@PathVariable("emailId") String emailId){
+	 String forgetPassword = iUserManagementService.forgetPassword(emailId);
+	 return new ResponseEntity<String>(forgetPassword,HttpStatus.OK);
+ }
+ 
+ 
+ 
+ @PostMapping(value="/signIn/{emailId}/{pass}",
+		       produces= {"application/json"})
+ public ResponseEntity<String> signIn(@PathVariable("emialId") String emailId,@PathVariable("pass") String pass){
+	 String loginCheck = iUserManagementService.loginCheck(emailId, pass);
+	 return new ResponseEntity<String>(loginCheck,HttpStatus.OK);
+ }
 	
  
  
-	
- 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
+ @PutMapping(value="/unlock/{emailid}/temppass/{newpass}")
+ public ResponseEntity<String> unlockAccount(@PathVariable("emailId") String emailId,@PathVariable("temppass") String temppass,@PathVariable("newpass") String newpass){
+	 boolean unlockAccount = iUserManagementService.unlockAccount(emailId, temppass, newpass);
+	 return new ResponseEntity<String>("Account unlocked, please proceed with login",HttpStatus.OK);
+  }
+	
+	
 }
+	
+	
+	
